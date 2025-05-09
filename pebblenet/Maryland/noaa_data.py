@@ -1,15 +1,18 @@
 #!/usr/bin/python -u
-import requests
+# built-ins
 from datetime import datetime
-from bs4 import BeautifulSoup
 import json
+import requests
 import re
+
+# external dependencies
+from bs4 import BeautifulSoup
 
 def main():
     chesapeake_stations = ["BLTM2", "CHCM2", "TCBM2", "FSKM2", "CPVM2", "APAM2",
                            "44063", "TPLM2", "BSLM2", "CAMM2", "44062", "COVM2",
-                           "SLIM2", "BISM2", "PPTM2", "44042"]
-    real_time_data: str = process_noaa_rt_stations(["BLTM2", "CHCM2"]) #json formatted string
+                           "SLIM2", "BISM2", "44042"]
+    real_time_data: str = process_noaa_rt_stations(chesapeake_stations) #json formatted string
     print(real_time_data)
 
 def process_noaa_rt_stations(stations: list[str]) -> str:
