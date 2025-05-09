@@ -55,12 +55,13 @@ def _aggregate_noaa_data(url_data: str, titles: list[str]) -> list[dict[str,str]
         list[dict[str,str]]: A list of dictionaries where each dictionary represents one data point 
         None: Data retrieval failed due to page not existing.
     """
-    #formats noaa data in a JSON friendly way
     dataarray = []
     if "404 Not Found" in url_data:
         return None
     lines = [data.split() for data in url_data.split('\n')]
-    lines = lines[2:-1] #first two lines are headers and last line could be empty
+    # First two lines are headers and last line could be empty
+    # Read in lines in reverse so final JSON is in ascending order
+    lines = lines[-2:3:-1] 
     dataarray = [{t:d for (t,d) in zip(titles, data)} for data in lines]
     return dataarray
 
@@ -124,7 +125,6 @@ def _convert_to_chart_data(parameters: [dict[str, str]], titles: list[str]) -> s
                 chart_data[title]["labels"].append(label)
                 chart_data[title]["values"].append(value)
     return list(chart_data.values())
-
 
 if __name__ == "__main__":
     main()
