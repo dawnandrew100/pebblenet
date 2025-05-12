@@ -2,11 +2,11 @@
 # built-ins
 from datetime import datetime
 import json
-import requests
 import re
 
 # external dependencies
 from bs4 import BeautifulSoup
+import requests
 
 def process_noaa_rt_stations(stations: list[str]) -> str:
     """

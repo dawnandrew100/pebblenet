@@ -1,6 +1,9 @@
-from bs4 import BeautifulSoup
+# built-ins
 import json
 import re
+
+# external dependencies
+from bs4 import BeautifulSoup
 import requests
 
 def get_eotb_stations() -> tuple[dict[str,str], list[str]]:
