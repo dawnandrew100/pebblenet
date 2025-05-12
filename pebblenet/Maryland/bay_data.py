@@ -2,7 +2,7 @@
 from pebblenet.Maryland.eotb_data import get_eotb_stations, eotb_stations_to_json
 from pebblenet.Maryland.noaa_data import process_noaa_rt_stations
 
-def main():
+def process_eotb_data():
     chesapeake_stations = ["BLTM2", "CHCM2", "TCBM2", "FSKM2", "CPVM2", "APAM2",
                            "44063", "TPLM2", "BSLM2", "CAMM2", "44062", "COVM2",
                            "SLIM2", "BISM2", "PPTM2", "44042"]
@@ -13,6 +13,12 @@ def main():
     print(monthly_data)
 
 
+def process_noaa_data():
+    chesapeake_stations = ["BLTM2", "CHCM2", "TCBM2", "FSKM2", "CPVM2", "APAM2",
+                           "44063", "TPLM2", "BSLM2", "CAMM2", "44062", "COVM2",
+                           "SLIM2", "BISM2", "44042"]
+    real_time_data: str = process_noaa_rt_stations(chesapeake_stations) #json formatted string
+    print(real_time_data)
 
 if __name__ == "__main__":
-    main()
+    process_noaa_data()

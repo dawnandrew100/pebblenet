@@ -8,20 +8,13 @@ import re
 # external dependencies
 from bs4 import BeautifulSoup
 
-def main():
-    chesapeake_stations = ["BLTM2", "CHCM2", "TCBM2", "FSKM2", "CPVM2", "APAM2",
-                           "44063", "TPLM2", "BSLM2", "CAMM2", "44062", "COVM2",
-                           "SLIM2", "BISM2", "44042"]
-    real_time_data: str = process_noaa_rt_stations(chesapeake_stations) #json formatted string
-    print(real_time_data)
-
 def process_noaa_rt_stations(stations: list[str]) -> str:
     """
     Processes real-time NOAA data for a list of stations and formats it into a JSON-friendly format.
-    
+
     Args:
         stations (list[str]): A list of station identifiers (e.g., "BLTM2", "CHCM2").
-    
+
     Returns:
         str: A JSON-formatted string of processed data, or None if no data was found.
     """
@@ -49,13 +42,13 @@ def process_noaa_rt_stations(stations: list[str]) -> str:
 def _aggregate_noaa_data(url_data: str, titles: list[str]) -> list[dict[str,str]] | None:
     """
     Aggregates NOAA data from the raw text into a list of dictionaries, one dictionary per reading.
-    
+
     Args:
         url_data (str): Raw text data retrieved from NOAA for a given station.
         titles (list[str]): List of column names to be used as dictionary keys.
-    
+
     Returns:
-        list[dict[str,str]]: A list of dictionaries where each dictionary represents one data point 
+        list[dict[str,str]]: A list of dictionaries where each dictionary represents one data point
         None: Data retrieval failed due to page not existing.
     """
     dataarray = []
@@ -71,12 +64,12 @@ def _aggregate_noaa_data(url_data: str, titles: list[str]) -> list[dict[str,str]
 def _batch_noaa_data(unbatched_data: dict[str, str], titles: list[str]) -> dict[str, dict[str, float | str]]:
     """
     Batches the NOAA data into daily averages for each parameter and rounds the results to one decimal place.
-    
+
     Args:
-        unbatched_data (dict[str, str]): A list of dictionaries where each dictionary represents 
+        unbatched_data (dict[str, str]): A list of dictionaries where each dictionary represents
             individual parameter data for a specific timestamp.
         titles (list[str]): A list of column names (parameters), including date/time fields and measured variables.
-    
+
     Returns:
         dict[str, dict[str, float | str]]: A dictionary where:
             - Each key is a date string in 'YY-MM-DD' format.
@@ -122,12 +115,9 @@ def _convert_to_chart_data(parameters: [dict[str, str]], titles: list[str]) -> s
     chart_data = {title: {"name": title, "labels": [], "values": []} for title in titles}
     for date in parameters:
         label = datetime.strptime(date, "%Y-%m-%d").strftime("%b %d")
-        for title in titles:   
+        for title in titles:
             value = parameters[date].get(title)
             if value != "":
                 chart_data[title]["labels"].append(label)
                 chart_data[title]["values"].append(value)
     return list(chart_data.values())
-
-if __name__ == "__main__":
-    main()
