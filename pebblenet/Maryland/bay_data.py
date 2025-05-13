@@ -13,9 +13,9 @@ def process_eotb_data():
     return monthly_data
 
 def process_noaa_data():
-    chesapeake_stations = ["BLTM2", "CHCM2", "TCBM2", "FSKM2", "CPVM2", "APAM2",
-                           "44063", "TPLM2", "BSLM2", "CAMM2", "44062", "COVM2",
-                           "SLIM2", "BISM2", "44042"]
+    chesapeake_stations = ["BLTM2", "FSKM2", "TCBM2", "LTQM2", "CHCM2", "CPVM2",
+                           "ARAM2", "44063", "TPLM2", "CXLM2", "CAMM2", "BISM2",
+                           "44042", "SLIM2", "COVM2", "44062", "BRIM2", "BSLM2"]
     real_time_data: str = process_noaa_rt_stations(chesapeake_stations) #json formatted string
     return real_time_data
 
